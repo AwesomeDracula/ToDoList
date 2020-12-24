@@ -16,7 +16,7 @@ const handleItem = function(itemName){
 			//complete-item event listener
 			item.querySelector('.complete-item').addEventListener('click',function(){
 				item.querySelector('.item-name').classList.toggle('completed');
-				this.classList.toggle('visibility');
+				this.parentNode.classList.toggle('visibility');
 			});
 			//edit-item event listener
 			item.querySelector('.edit-item').addEventListener('click',function(){
@@ -28,6 +28,7 @@ const handleItem = function(itemName){
 			});
 			//delete-item event listener
 			item.querySelector('.delete-item').addEventListener('click',function(){
+				removeItemFromStorage(itemName);
 				itemList.removeChild(item);
 				todoList = todoList.filter(function(item){
 					return item !== itemName;
@@ -37,12 +38,11 @@ const handleItem = function(itemName){
 	});
 }
 
-// const removeItem = function(item){
-// 	console.log(item);
-// 	const removeIndex = (todoList.indexOf(item));
-// 	console.log(removeIndex);
-// 	todoList.splice(removeIndex,1);
-// }
+const removeItemFromStorage = function(itemName){
+	const removeIndex = (todoList.indexOf(itemName));
+	todoList.splice(removeIndex,1);
+	setLocalStorage(todoList);
+}
 
 const getList = function(todoList){
 	itemList.innerHTML = '';
@@ -73,7 +73,7 @@ form.addEventListener('submit', function(e){
 	e.preventDefault();
 	const itemName = itemInput.value;
 	if(itemName.length === 0){
-		feedback.innerHTML = 'please enter valid value';
+		feedback.innerHTML = 'you did not write anything';
 		feedback.classList.add('show', 'alert-danger');
 		setTimeout(
 			function(){
