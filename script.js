@@ -1,12 +1,14 @@
-// add event listener to the form
+//Initial variables
 const form = document.querySelector('#mainForm');
 const itemInput = document.querySelector('#itemInput');
 const itemList = document.querySelector('.item-list');
 const feedback = document.querySelector('.feedback');
 const clearButton = document.querySelector('#clear-list');
 
+// List
 let todoList = [];
 
+// Handle each item
 const handleItem = function(itemName){
 	const items = itemList.querySelectorAll('.item');
 	items.forEach(function(item){
@@ -26,7 +28,6 @@ const handleItem = function(itemName){
 			});
 			//delete-item event listener
 			item.querySelector('.delete-item').addEventListener('click',function(){
-				debugger;
 				itemList.removeChild(item);
 				todoList = todoList.filter(function(item){
 					return item !== itemName;
